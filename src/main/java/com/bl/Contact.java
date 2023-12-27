@@ -34,7 +34,6 @@ public class Contact implements Serializable {
                 "\nEmail: " + email +
                 "\n-----------------------";
     }
-
     public String getFullName() {
         return firstName + " " + lastName;
     }

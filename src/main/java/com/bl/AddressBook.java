@@ -1,14 +1,19 @@
 package com.bl;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
+
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class AddressBook implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -158,6 +163,29 @@ public class AddressBook implements Serializable {
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
             System.out.println("Error reading contacts from CSV file.");
+        }
+    }
+
+    public void writeContactsToJSON(String fileName) {
+        try (FileWriter writer = new FileWriter(fileName)) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            gson.toJson(contacts, writer);
+            System.out.println("Contacts written to JSON file successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error writing contacts to JSON file.");
+        }
+    }
+
+    public void readContactsFromJSON(String fileName) {
+        try (FileReader reader = new FileReader(fileName)) {
+            Gson gson = new Gson();
+            Contact[] contactsArray = gson.fromJson(reader, Contact[].class);
+            contacts = new ArrayList<>(Arrays.asList(contactsArray));
+            System.out.println("Contacts read from JSON file successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error reading contacts from JSON file.");
         }
     }
 

@@ -86,7 +86,9 @@ public class AddressBookMain {
                 System.out.println("10. Read address book data in file");
                 System.out.println("11. Write contacts to CSV");
                 System.out.println("12. Read contacts from CSV");
-                System.out.println("13. Exit");
+                System.out.println("13. Write contacts as JSON");
+                System.out.println("14. Read contacts from JSON");
+                System.out.println("15. Exit");
 
                 System.out.print("Enter your choice: ");
                 choice = sc.nextLine();
@@ -113,6 +115,7 @@ public class AddressBookMain {
                         Contact newContact = new Contact(newFirstName, newLastName, newAddress, newCity, newState, newZip, newPhoneNumber, newEmail);
                         addressBook.addContact(newContact);
                         addressBook.writeContactsToCSV("contacts.csv");
+                        addressBook.writeContactsToJSON("contacts.json");
                         break;
                     case "2":
                         System.out.println("Contact Details:");
@@ -125,17 +128,22 @@ public class AddressBookMain {
                         addressBook.editContact(editFirstName);
                         addressBook.displayContacts();
                         addressBook.writeContactsToCSV("contacts.csv");
+                        addressBook.writeContactsToJSON("contacts.json");
                         break;
                     case "4":
                         System.out.println("Enter the First Name of the contact you want to delete:");
                         String deleteFirstName = sc.nextLine();
 
                         addressBook.deleteContact(deleteFirstName);
+                        addressBook.writeContactsToCSV("contacts.csv");
+                        addressBook.writeContactsToJSON("contacts.json");
                         break;
                     case "5":
                         addressBook.sortContactsByName();
                         System.out.println("Contacts sorted by name:");
                         addressBook.displayContacts();
+                        addressBook.writeContactsToCSV("contacts.csv");
+                        addressBook.writeContactsToJSON("contacts.json");
                         break;
 
                     case "6":
@@ -174,11 +182,21 @@ public class AddressBookMain {
                         String readCSVFileName = sc.nextLine();
                         addressBook.readContactsFromCSV(readCSVFileName);
                         break;
-
                     case "13":
+                        System.out.print("Enter the file name to write contacts as JSON: ");
+                        String writeJSONFileName = sc.nextLine();
+                        addressBook.writeContactsToJSON(writeJSONFileName);
+                        System.out.println("Contacts written to JSON file successfully.");
+                        break;
+                    case "14":
+                        System.out.print("Enter the file name to read contacts from JSON: ");
+                        String readJSONFileName = sc.nextLine();
+                        addressBook.readContactsFromJSON(readJSONFileName);
+                        System.out.println("Contacts read from JSON file successfully.");
+                        break;
+                    case "15":
                         System.out.println("Exiting...");
                         break;
-
                     default:
                         System.out.println("Invalid choice! Please try again...");
                         break;
